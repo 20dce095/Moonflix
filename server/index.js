@@ -15,18 +15,19 @@ app.use(cookieParser());
 
 app.use("/api/v1", routes);
 
-const port = process.env.PORT || 5000;
+const port = 5000;
 
 const server = http.createServer(app);
 
-mongoose.connect(process.env.MONGODB_URL).then(() => {
-  console.log("Mongodb connected");
-  server.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
-  });
-}).catch((err) => {
-  console.log({ err });
-  process.exit(1);
-});
+mongoose.set('strictQuery', true);
+mongoose
+  .connect("mongodb+srv://pradippipaliya02:moonflixdb@cluster0.bqa5czs.mongodb.net/moonflix?retryWrites=true&w=majority", {
+    useNewUrlParser: true,
+    // useUnifiedTopology: true,
+    // useCreateIndex: true,
+    // useFindAndModify: false,
+  })
+  .then(() => console.log("MongoDB Connected..."))
+  .catch((err) => console.log(err));
 
 //test
